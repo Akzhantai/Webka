@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Convert IMAGE to PDF | Node Auth</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h2 {
+            margin-bottom: 20px; /* Increase margin for h2 */
+            font-size: 36px; /* Increase font size for h2 */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px; /* Increase margin for form */
+        }
+
+        input[type="file"] {
+            margin-bottom: 15px; /* Increase margin for file input */
+            padding: 10px; /* Increase padding for file input */
+        }
+
+        input[type="submit"] {
+            background-color: #007bff; /* Change button color to blue */
+            color: white;
+            border: none;
+            padding: 15px 30px; /* Increase padding for button */
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #downloadLinks {
+            margin-top: 30px; /* Increase margin for downloadLinks */
+        }
+
+        #downloadLinks a {
+            display: block;
+            margin-bottom: 10px; /* Increase margin for downloadLinks a */
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px; /* Increase font size for downloadLinks a */
+        }
+
+        #downloadLinks a:hover {
+            text-decoration: underline;
+        }
+
+        a[href="/dashboard"] {
+            margin-top: 30px; /* Increase margin for Back to Dashboard link */
+            color: #007bff;
+            text-decoration: none;
+            font-size: 18px; /* Increase font size for Back to Dashboard link */
+        }
+
+        a[href="/dashboard"]:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h2>Convert IMAGE to PDF</h2>
+<form id="uploadForm" action="/imagetopdf" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+    <input type="file" name="images" accept=".jpg, .jpeg, .png" multiple>
+    <input type="submit" value="Convert to PDF">
+</form>
+
+<div id="downloadLinks"></div>
+
+<a href="/dashboard">Back to Dashboard</a>
+
+<script>
+    function validateForm() {
+        const myFiles = document.querySelector('input[type="file"]').files;
+
+        if (myFiles.length === 0) {
+            alert("No files selected.");
+            return false; // Prevent form submission
+        }
+
+        for (let i = 0; i < myFiles.length; i++) {
+            const file = myFiles[i];
+            if (file.size > 10 * 1024 * 1024) {
+                alert("File size exceeds 10MB limit.");
+                return false; // Prevent form submission
+            }
+        }
+
+        // If files are selected and within size limit, the form submission proceeds normally
+        return true;
+    }
+
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/imagetopdf', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json()) // Parse response as JSON
+            .then(data => {
+                const downloadLinks = document.getElementById("downloadLinks");
+                downloadLinks.innerHTML = "";
+                data.forEach((file) => {
+                    const link = document.createElement('a');
+                    link.href = `/download/${encodeURIComponent(file)}`;
+                    link.download = file;
+                    link.textContent = file;
+                    downloadLinks.appendChild(link);
+                    downloadLinks.appendChild(document.createElement('br'));
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
+</script>
+</body>
+</html>

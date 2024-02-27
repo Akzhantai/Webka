@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | Node Auth</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      margin-top: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+
+    li {
+      margin-bottom: 15px; /* Increase margin for list items */
+    }
+
+    a {
+      display: block;
+      padding: 15px; /* Increase padding for links */
+      font-size: 18px; /* Increase font size for links */
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px; /* Increase border-radius for links */
+    }
+
+    a:hover {
+      background-color: #0056b3;
+    }
+
+    form {
+      margin-top: 30px; /* Increase margin for form */
+    }
+
+    button {
+      padding: 15px 30px; /* Increase padding for button */
+      font-size: 18px; /* Increase font size for button */
+      background-color: #dc3545; /* White background */
+      color:#fff; /* Red text color */
+      border: 2px solid #dc3545; /* Red border */
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #fff; /* Red background on hover */
+      color: #dc3545; /* White text color on hover */
+    }
+  </style>
+</head>
+<body>
+<h2>Dashboard</h2>
+<ul>
+  <li><a href="/docxtopdf">Convert DOCX to PDF</a></li>
+  <li><a href="/imagetopdf">Convert IMAGE to PDF</a></li>
+  <li><a href="/history">View Conversion History</a></li>
+</ul>
+<form action="/logout" method="POST">
+  <button>Logout</button>
+</form>
+</body>
+</html>
