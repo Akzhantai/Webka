@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      margin-top: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+
+    li {
+      margin-bottom: 15px; /* Increase margin for list items */
+    }
+
+    a {
+      display: block;
+      padding: 15px; /* Increase padding for links */
+      font-size: 18px; /* Increase font size for links */
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px; /* Increase border-radius for links */
+    }
+
+    a:hover {
+      background-color: #0056b3;
+    }
+
+    form {
+      margin-top: 30px; /* Increase margin for form */
+    }
+
+    button {
+      padding: 15px 30px; /* Increase padding for button */
+      font-size: 18px; /* Increase font size for button */
+      background-color: #dc3545; /* White background */
+      color:#fff; /* Red text color */
+      border: 2px solid #dc3545; /* Red border */
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #fff; /* Red background on hover */
+      color: #dc3545; /* White text color on hover */
+    }
+  </style>
+  <script>
+    // JavaScript for session timeout warning and extension
+    document.addEventListener('DOMContentLoaded', function() {
+      let sessionTimeoutWarning = 60 * 2 - 10; // 2 minutes session timeout - 10 seconds warning
+      let sessionTimeout = 60 * 2; // 2 minutes session timeout
+
+      setTimeout(function() {
+        // Display session timeout warning popup
+        alert("Your session is about to expire.");
+        // Popup logic here (extend session button)
+        if (confirm("Do you want to extend your session?")) {
+          // Extend the session by making a request to the server
+          fetch('/extend-session', { method: 'POST' })
+                  .then(response => {
+                    if (response.ok) {
+                      alert("Session extended.");
+                    } else {
+                      alert("Failed to extend session.");
+                    }
+                  })
+                  .catch(error => console.error('Error:', error));
+        }
+      }, sessionTimeoutWarning * 1000);
+
+    });
+  </script>
+</head>
+<body>
+<h2>Dashboard</h2>
+<ul>
+  <li><a href="/docxtopdf">Convert DOCX to PDF</a></li>
+  <li><a href="/imagetopdf">Convert IMAGE to PDF</a></li>
+  <li><a href="/history">View Conversion History</a></li>
+</ul>
+<form action="/logout" method="POST">
+  <button>Logout</button>
+</form>
+</body>
+</html>
