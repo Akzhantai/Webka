@@ -267,6 +267,6 @@ app.get('/download/:filename', (req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => console.log(`App Running on http://localhost:${PORT}`));
+app.listen(PORT, '0.0.0.0', () => console.log(`App Running on http://0.0.0.0:${PORT}`));
 
 module.exports = app;
